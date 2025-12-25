@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية الصحة - كتاب المدرب</title>
+    <style>
+        /* تم تعديل المتغيرات لتصبح قيم الوضع الداكن هي الافتراضية */
+        :root { 
+            --bg-color: #1a1a1a; 
+            --container-bg: #2d2d2d; 
+            --text-color: #ecf0f1; 
+            --primary-color: #2ecc71; 
+            --secondary-color: #3498db; 
+            --mech-bg: #3d2b2b; 
+            --mech-border: #822727; 
+            --mech-text: #ecf0f1; 
+        }
+        
+        /* الوضع الفاتح أصبح هو الكلاس الاختياري */
+        .light-mode { 
+            --bg-color: #f4f7f6; 
+            --container-bg: #ffffff; 
+            --text-color: #2c3e50; 
+            --primary-color: #27ae60; 
+            --mech-bg: #fff5f5; 
+            --mech-border: #feb2b2; 
+            --mech-text: #2c3e50; 
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            transition: 0.3s; 
+            padding: 20px; 
+            direction: rtl; 
+            margin: 0; 
+            font-size: 18px; 
+            font-weight: bold;
+        }
+        
+        .top-nav { display: flex; justify-content: space-between; align-items: center; max-width: 900px; margin: 0 auto 20px auto; gap: 10px; flex-wrap: wrap; }
+        .tab-btn { padding: 12px 20px; cursor: pointer; border: none; border-radius: 8px; font-weight: 900; background: #bdc3c7; color: #2c3e50; transition: 0.3s; }
+        .tab-btn.active { background: var(--primary-color); color: white; }
+        
+        .controls { display: flex; gap: 8px; align-items: center; }
+        .btn-ctrl { background: #2c3e50; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 18px; }
+
+        .container { background: var(--container-bg); padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); width: 100%; max-width: 900px; margin: 0 auto; position: relative; }
+        
+        .header-wrapper { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px; 
+            padding-bottom: 15px;
+            border-bottom: 2px solid #444; /* تكييف لون الخط مع الوضع الداكن */
+        }
+        .logo-section { flex: 1; text-align: right; }
+        .info-section { 
+            flex: 1; 
+            text-align: left; 
+            direction: ltr; 
+            font-family: 'Arial Black', Gadget, sans-serif;
+            color: var(--text-color); 
+            line-height: 1.2;
+        }
+        .info-section h3 { margin: 0; font-size: 24px; font-weight: 900; text-transform: uppercase; }
+        .info-section p { margin: 0; font-size: 18px; font-weight: 900; }
+        .logo-img { max-width: 160px; height: auto; }
+
+        h1 { text-align: center; color: var(--primary-color); font-size: 32px; border-bottom: 4px double var(--primary-color); padding-bottom: 10px; margin-top: 0; font-weight: 900; }
+        h2 { background: #2c3e50; color: white; padding: 10px; border-radius: 10px; font-size: 24px; margin-top: 30px; font-weight: 900; }
+
+        .mechanism-box { background: var(--mech-bg); border: 3px solid var(--mech-border); padding: 20px; border-radius: 12px; margin-bottom: 25px; text-align: center; line-height: 1.8; color: var(--mech-text); }
+        .mechanism-title { font-weight: 900; font-size: 24px; color: #ff5e5e; display: block; margin-bottom: 10px; text-decoration: underline; }
+        .warning-red { color: #ff5e5e; font-weight: 900; font-size: 20px; border: 2px dashed #ff5e5e; padding: 10px; display: inline-block; margin-top: 10px; }
+
+        #timer-container { 
+            position: fixed; 
+            top: 150px; 
+            left: 20px; 
+            width: 100px; 
+            padding: 5px 10px 10px 10px; 
+            background: var(--primary-color); 
+            color: white; 
+            border-radius: 15px; 
+            text-align: center; 
+            z-index: 1000; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+            user-select: none;
+            touch-action: none;
+            transition: background-color 0.3s;
+        }
+        #timer-handle { cursor: move; background: rgba(0,0,0,0.1); padding: 4px; border-radius: 10px 10px 0 0; font-size: 12px; margin-bottom: 5px; }
+        #timer-display { font-size: 28px; font-weight: 900; display: block; }
+        
+        .question-block { background: var(--container-bg); border-right: 10px solid var(--secondary-color); padding: 18px; margin-bottom: 18px; border-radius: 0 12px 12px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.05); page-break-inside: avoid; }
+        .question-text { font-weight: 900; font-size: 20px; margin-bottom: 8px; display: block; color: var(--secondary-color); }
+        .answer-text { font-size: 17px; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; display: block; margin-bottom: 10px; border-left: 5px solid #555; white-space: pre-line; color: var(--text-color); }
+        .scenario-box { background: #453b1d; color: #ffe69c; padding: 15px; border-radius: 10px; font-style: italic; margin-bottom: 10px; border: 1px solid #66521a; font-size: 18px; font-weight: 800; }
+
+        .score-select { padding: 5px; border-radius: 8px; border: 2px solid var(--secondary-color); font-weight: 900; background: var(--container-bg); color: var(--text-color); font-size: 16px; }
+
+        .result-section { text-align: center; margin-top: 40px; padding: 30px; border-radius: 20px; border: 6px solid var(--primary-color); background: #2c3e50; color: white; display: none; }
+        .details-grid { display: flex; justify-content: space-around; margin-bottom: 20px; gap: 10px; flex-wrap: wrap; }
+        .detail-item { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; flex: 1; min-width: 150px; }
+        .detail-item span { display: block; font-size: 14px; opacity: 0.8; }
+        .detail-item strong { font-size: 24px; }
+        
+        .result-box-wrapper { display: inline-block; border: 4px solid var(--primary-color); padding: 10px 40px; border-radius: 15px; margin: 15px 0; background: #fff; }
+        .grandTotal { font-size: 55px; font-weight: 900; color: var(--primary-color); margin: 0; }
+        
+        .btn-main { background: var(--primary-color); color: white; border: none; padding: 15px; font-size: 22px; border-radius: 12px; cursor: pointer; width: 100%; font-weight: 900; margin-top: 15px; }
+
+        .footer-text { text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #444; font-size: 16px; color: #7f8c8d; width: 100%; }
+
+        .page-content { display: none; }
+        .page-active { display: block; }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; color: black !important; margin: 0 !important; padding: 0 !important; }
+            .container { max-width: 100% !important; border: none !important; background: white !important; zoom: 0.82; }
+            .question-block { border: 1px solid #ccc !important; background: white !important; color: black !important; }
+            .answer-text { background: #f9f9f9 !important; border-left: 5px solid #ccc !important; color: black !important; }
+            .info-section, .info-section h3, .info-section p { color: black !important; }
+        }
+    </style>
+</head>
+<body id="main-body">
+
+<div class="top-nav no-print">
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="showPage('A', this)">صفحة A</button>
+        <button class="tab-btn" onclick="showPage('B', this)">صفحة B</button>
+    </div>
+    <div class="controls">
+        <button class="btn-ctrl" onclick="changeFontSize(1)">+</button>
+        <button class="btn-ctrl" onclick="changeFontSize(-1)">-</button>
+        <button class="btn-ctrl" onclick="toggleMode()">☀️/🌙</button>
+    </div>
+</div>
+
+<div id="timer-container" class="no-print">
+    <div id="timer-handle">⠿ اسحب هنا</div>
+    <span id="timer-display">05</span>
+    <button onclick="startTimer()" style="font-weight: 900; cursor: pointer; background:none; border:none; color:white; display:block; width:100%;">ابدأ</button>
+</div>
+
+<div class="container">
+    <div class="header-wrapper">
+        <div class="logo-section">
+            <img src="https://www2.0zz0.com/2025/12/22/17/297618659.png" alt="Logo" class="logo-img">
+        </div>
+        <div class="info-section">
+            <h3>Ministry Of Health</h3>
+            <p>EMS Academy<br>Instructor HandBook</p>
+        </div>
+    </div>
+
+    <div class="mechanism-box">
+        <span class="mechanism-title">آلية الاختبار:</span>
+        <span>• 15 سؤال لكل متدرب</span><br>
+        <span>• اختبار سيناريوهات</span><br>
+        <span>• طريقة التأكد على حياة الرهائن</span><br>
+        <span class="warning-red">5 ثواني في حال تأخرت عن الاجابة يعتبر السؤال ملغي وغير محسوب</span>
+    </div>
+
+    <div id="pageA" class="page-content page-active">
+        <h1>اسئلة اختبار (A)</h1>
+        <div id="theory-questions-A"></div>
+        <div class="question-block extra-A">
+            <span class="question-text">سؤال إضافي: طريقة تمرير البلاغات الى الرتب العليا مثل M-0؟</span>
+            <span class="answer-text">(لا يحسب خطأ)</span>
+            الدرجة: <select class="score-select bonus-A"><option value="0">0</option><option value="1">1</option></select>
+        </div>
+        
+        <h2>السيناريوهات </h2>
+        <div class="question-block sc-A">
+            <span class="question-text">السيناريو الأول:</span>
+            <div class="scenario-box">"سجلت دخولي وباشرت في لوس سانتوس وانا في قطاع EMS وماكان فيه الا 3 وحدات رحت انا ومرافق لي لحالة 997 كان شخص مسقط بشكل كامل وعالجته في الموقع ورجعنا للمستشفى"</div>
+            <span class="answer-text">* عدم التواصل مع الدسباتش (1د) <br> * معالجة مسقط كامل بالخارج (1د) <br> * خروج من المشفى وهو في قطاع EMS (1د)</span>
+            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        </div>
+        <div class="question-block sc-A">
+            <span class="question-text">السيناريو الثاني:</span>
+            <div class="scenario-box">"اثناء مباشرة المسعف كدورية حره توجه لحالة جنائية وعند وصوله للموقع، اتضح ان الحالة لازالت قائمة ويوجد اطلاق نار بالموقع، انتظر المسعف بالموقع لحين انتهاء الحالة وعند انتهائها توجه للعساكر المسقطين بسبب طلاق نار وتم علاجهم بنفس الموقع."</div>
+            <span class="answer-text">* ما بلغ الديسباتش (1د) <br> * انتظر بالموقع والحالة لازالت قائمة (1د) <br> * عالج العساكر بنفس الموقع (1د)</span>
+            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        </div>
+
+        <h2>الجانب العملي </h2>
+        <div class="question-block pr-A">
+            <span class="question-text">طريقة التأكد من حياة الرهائن:</span>
+            <span class="answer-text">* التعريف بنفسه (1د) <br> * سؤال المواطن عن وضعه الصحي وطريقة التعامل مع المجرمين معه + علاج في حال وجود إصابات أقل من 3 (1د) <br> * تحديث الحالة لمسؤول الحالة لدى العساكر و الدسباتش (1د)</span>
+            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        </div>
+        <div class="question-block pr-A">
+            <span class="question-text">طريقة العلاج بشكل كامل:</span>
+            <span class="answer-text">* استخراج السرير (1د) <br> * التأكد من الاصابات (1د) <br> * العلاج (1د)</span>
+            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        </div>
+        <button class="btn-main no-print" onclick="processResult('A')">إعتماد النتيجة</button>
+    </div>
+
+    <div id="pageB" class="page-content">
+        <h1>اسئلة اختبار (B)</h1>
+        <div id="theory-questions-B"></div>
+        
+        <h2>السيناريوهات </h2>
+        <div class="question-block sc-B">
+            <span class="question-text">السيناريو الأول:</span>
+            <div class="scenario-box">"وجهك الدسباتش كوحده حره في لوس وماعندك حالات و طلب منك مواطن توصله للمطعم وصلته ونزلت معاه واخذت وجبات ولقيت الموظف ينزف عنده اربع اصابات عالجته ورجعت للمستشفى"</div>
+            <span class="answer-text">* ممنوع توصيل مواطنين (1د) <br> * ممنوع التوجه للمطعم بدون اذن الدسباتش (1د) <br> * ممنوع معالجة اكثر من 3 اصابات (1د)</span>
+            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        </div>
+        <div class="question-block sc-B">
+            <span class="question-text">السيناريو الثاني:</span>
+            <div class="scenario-box">"اثناء مباشرة المسعف كدورية حره توجه لحالة جنائية وعند وصوله للموقع، اتضح ان الحالة لازالت قائمة ويوجد اطلاق نار بالموقع، انتظر المسعف بالموقع لحين انتهاء الحالة وعند انتهائها توجه للعساكر المسقطين بسبب طلاق نار وتم علاجهم بنفس الموقع."</div>
+            <span class="answer-text">* ما اخذ اذن من الدسباتش (1د) <br> * انتظر بالموقع والحالة لازالت قائمة (1د) <br> * عالج العساكر بنفس الموقع (1د)</span>
+            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        </div>
+
+        <h2>الجانب العملي </h2>
+        <div class="question-block pr-B">
+            <span class="question-text">طريقة التأكد من حياة الرهائن:</span>
+            <span class="answer-text">* التعريف بنفسه (1د) <br> * سؤال المواطن عن وضعه الصحي وطريقة التعامل مع المجرمين معه + علاج في حال وجود إصابات أقل من 3 (1د) <br> * تحديث الحالة لمسؤول الحالة لدى العساكر و الدسباتش (1د)</span>
+            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        </div>
+        <div class="question-block pr-B">
+            <span class="question-text">طريقة العلاج بشكل كامل:</span>
+            <span class="answer-text">* استخراج السرير (1د) <br> * التأكد من الاصابات (1د) <br> * العلاج (1د)</span>
+            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+        </div>
+        <button class="btn-main no-print" onclick="processResult('B')">إعتماد النتيجة</button>
+    </div>
+
+    <div id="resultArea" class="result-section">
+        <h2>تفاصيل النتيجة النهائية</h2>
+        <div class="details-grid">
+            <div class="detail-item">
+                <span>درجات النظري</span>
+                <strong id="theorySubtotal">0</strong>
+            </div>
+            <div class="detail-item">
+                <span>درجات العملي</span>
+                <strong id="practicalSubtotal">0</strong>
+            </div>
+        </div>
+        <span>المجموع الكلي:</span>
+        <div class="result-box-wrapper"><div class="grandTotal" id="resTotal">0</div></div>
+        <div id="resStatus" style="font-size: 32px; margin: 15px 0; font-weight: 900;">--</div>
+    </div>
+    <div class="footer-text">جميع الحقوق محفوظه لأكاديمية الصحة في MT | برمجة علي الحاجي ali_go </div>
+</div>
+
+<script>
+    const qA = [
+        {q: "1- اذكر لي انواع الحالات التي لا يتم علاجها بالخارج؟", a: "• اصابة بالرأس • اربع اصابات او اكثر • مسقط بشكل كامل • مسقط بطلق نار"},
+        {q: "2- اذكر الحالات التي يتم فيها استخراج سيارة الفان؟", a: "• في حال عدد المسقطين كبير (من 5 الى 7 ) وداخل لوس"},
+        {q: "3- ما الفرق بين قطاع paramedic وقطاع ems؟", a: "• التواجد بالمستشفى واستقبال الحالات | • التوزع بالميدان ونقل المستقطين"},
+        {q: "4- ماهي الحالات التي يتم فيها تكفين المسقطين؟", a: "• متفجر او محترق • مننتحر"},
+        {q: "5- اذكر فائدة ال Tourniqueet أو الربطة ؟", a: "• ربط العضو المصاب لإيقاف النزيف"},
+        {q: "6- اذكر لي ثلاث ادوات اسعافيه مع ذكر طريقة استخدامها؟", a: "(تعتمد على المتدرب)"},
+        {q: "7- ما استخدامات غرفة الـ ICU؟ اذكر المصرح لهم بإقفال الباب؟", a: "• معالجة المجرمين \n • وزير الداخلية ونائبه+دايركتر جنرال + جينيرالات+رئيس الشرطه ونائبة رئيس القانق يونت."},
+        {q: "8- من يحق له استخراج الايرشب؟", a: "• حامل الونق"},
+        {q: "9- اذكر طريقه التبليغ الصحيحه لطلب وحده نقل؟ ", a: "يونت... تو ديسباتش.. احتاج تن زيرو في موقعي"},
+        {q: "10- ماهي مركبات رتبه ال EMR؟", a: "• تاهو • فان"},
+        {q: "11- اذكر التصرف الصحيح في حال جاك مواطن مصاب وغير محترم؟ + جاك مواطن يبي يتعالج ورافض ينزع الماسك ؟ + جاك عسكري وهاوشك او قدم لك اساءه + جاء مواطن وهرب مجرم امامك والعساكر مو منتبهين؟ + هل يحق لك نطح المجرم ومساعدة العساكر في القبض عليه؟", a: "(المدرب مخير في اختيار السؤال إما جميعها او يختار كم واحد منها والدرجة تقديريه)"},
+        {q: "12- ماذا يعني كود تن فورتين؟", a: "• سرقة محل مجوهرات"},
+        {q: "13- ماذا يعني كود سكس؟ ", a: "• جاري التحقق من المكان"},
+        {q: "14- ماهو كود وحدة الدعم؟", a: "• تن توتني ثري"},
+        {q: "15- متى يحق لك استخراج مركبة الدرانقو والجيب؟", a: "درانقو (ادفانس) | جيب (ماستر) او من مسؤل الفترة"}
+    ];
+
+    const qB = [
+        {q: "1- اذكر لي انواع الحالات التي لا يتم علاجها بالخارج؟", a: "• اصابة بالرأس - اربع اصابات او اكثر - مسقط بشكل كامل - مسقط بطلق نار"},
+        {q: "2- ماهو قطاع المسؤول عن نقل المسقطين؟", a: "• paramedic"},
+        {q: "3- ماهي الحالات التي يتم فيها تكفين المسقط ؟", a: "• المتفجر • المنتحر • المحترق"},
+        {q: "4- ماهي استخدامات غرفة الـ icu ؟ ومن المصرح لهم اقفالها؟", a: "• معالجة المجرمين\n• وزير الداخلية ونائبه+دايركتر جنرال + جينيرالات+رئيس الشرطه ونائبة رئيس القانق يونت."},
+        {q: "5- ماهو كود blane county في بروتوكولات الراديو ؟", a: "• 12-10"},
+        {q: "6- ماهو كود red في بروتوكولات الراديو ؟", a: "اذا كانت غرفة الطوارئ فيها عدد كبير من المسقطين / جميع الوحدات الشاغره في المستشفى تتوجه الى غرفة الطوارئ"},
+        {q: "7- ماهو كود الغاء البلاغ في بروتوكولات الراديو ؟", a: "• 0-4"},
+        {q: "8- اذكر الحالات التي يتم فيها استخراج سيارة الفان؟", a: "في حال عدد المسقطين كبير (من 5 الى 7) وداخل لوس"},
+        {q: "9- ماهي مركبات المسموحه لرتبه ال EMR؟", a: "تاهو - فان"},
+        {q: "10- اذكر التصرف الصحيح في حال جاك مواطن مصاب وغير محترم؟ + جاك مواطن يبي يتعالج ورافض ينزع الماسك ؟ + جاك عسكري وهاوشك او قدم لك اساءه + جاء مواطن وهرب مجرم امامك والعساكر مو منتبهين؟ + هل يحق لك نطح المجرم ومساعدة العساكر في القبض عليه؟ (درجة واحدة)", a: "(لمدرب مخير في اختيار السؤال إما جميعها او يختار كم واحد منها والدرجة تقديريه)"},
+        {q: "11- ماهي شروط صرف العكاز او الكرسي المتحرك ؟ والمدة؟ ", a: "عكاز: قدم (شهر) | كرسي: قدمين (شهرين)"},
+        {q: "12- متى يحق لك نقل المجرمين ومعالجتهم بدون وحدات عسكرية ؟", a: "لا يحق لك ابد بدون وحدات عسكريه"},
+        {q: "13- متى يحق لك مقاطعة بلاغات الراديو؟", a: "مايحق لك ، ممنوع مقاطعة البلاغات"},
+        {q: "14- في حال احتجت وحدات دعم اذكر لي طريقة البلاغ الصحيحة؟", a: "تو دسباتش.. احتاج تن توني ثري.. تن فور ارفع pick up"},
+        {q: "15- من يحق له استخراج الايرشب؟", a: "حامل الونق"}
+    ];
+
+    function gen(cId, list, prefix) {
+        const c = document.getElementById(cId);
+        list.forEach((item, i) => {
+            c.innerHTML += `<div class="question-block th-${prefix}"><span class="question-text">${item.q}</span><span class="answer-text">${item.a}</span><div class="check-group no-print"><label><input type="radio" name="${prefix}_q${i}" value="1"> صح ✅</label><label><input type="radio" name="${prefix}_q${i}" value="0" checked> خطأ ❌</label></div></div>`;
+        });
+    }
+    gen('theory-questions-A', qA, 'A');
+    gen('theory-questions-B', qB, 'B');
+
+    function processResult(type) {
+        let th = 0, sc = 0, pr = 0, b = 0;
+        document.querySelectorAll(`.th-${type} input[type="radio"]:checked`).forEach(i => th += parseInt(i.value));
+        document.querySelectorAll(`.sc-${type} select`).forEach(s => sc += parseInt(s.value));
+        document.querySelectorAll(`.pr-${type} select`).forEach(p => pr += parseInt(p.value));
+        if(type === 'A') b = parseInt(document.querySelector('.bonus-A').value);
+        
+        const theoryTotal = th + sc + b;
+        const practicalTotal = pr;
+        const total = theoryTotal + practicalTotal;
+        
+        document.getElementById('theorySubtotal').innerText = theoryTotal;
+        document.getElementById('practicalSubtotal').innerText = practicalTotal;
+        document.getElementById('resTotal').innerText = total;
+        
+        const st = document.getElementById('resStatus');
+        if (total >= 20) { st.innerText = "ناجح ✅"; st.style.color = "#2ecc71"; }
+        else if (total >= 15) { st.innerText = "ينظر في أمره ⚠️"; st.style.color = "#f39c12"; }
+        else { st.innerText = "راسب ❌"; st.style.color = "#e74c3c"; }
+        
+        document.getElementById('resultArea').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('resultArea').offsetTop, behavior: 'smooth' });
+    }
+
+    let timerInt;
+    function startTimer() {
+        clearInterval(timerInt);
+        let time = 5;
+        const display = document.getElementById('timer-display');
+        const container = document.getElementById('timer-container');
+        display.innerText = "05";
+        container.style.backgroundColor = "var(--primary-color)";
+        timerInt = setInterval(() => {
+            time--;
+            display.innerText = (time < 10 ? "0" : "") + time;
+            if (time === 3) container.style.backgroundColor = "#e67e22"; 
+            else if (time <= 1) container.style.backgroundColor = "#e74c3c"; 
+            if(time <= 0) { clearInterval(timerInt); alert("انتهى الوقت!"); }
+        }, 1000);
+    }
+
+    const timerBox = document.getElementById("timer-container");
+    const timerHandle = document.getElementById("timer-handle");
+    let isDragging = false, offsetX, offsetY;
+    const dragStart = (e) => {
+        isDragging = true;
+        const clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
+        offsetX = clientX - timerBox.getBoundingClientRect().left;
+        offsetY = clientY - timerBox.getBoundingClientRect().top;
+    };
+    const dragging = (e) => {
+        if (!isDragging) return;
+        const clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
+        timerBox.style.left = (clientX - offsetX) + "px";
+        timerBox.style.top = (clientY - offsetY) + "px";
+    };
+    timerHandle.addEventListener("mousedown", dragStart);
+    document.addEventListener("mousemove", dragging);
+    document.addEventListener("mouseup", () => isDragging = false);
+    timerHandle.addEventListener("touchstart", dragStart);
+    document.addEventListener("touchmove", dragging, { passive: false });
+    document.addEventListener("touchend", () => isDragging = false);
+
+    function showPage(pId, btn) {
+        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('page-active'));
+        document.getElementById('page' + pId).classList.add('page-active');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('resultArea').style.display = 'none';
+    }
+    
+    // تعديل الوظيفة لتبديل الوضع الفاتح بدلاً من الداكن
+    function toggleMode() { document.body.classList.toggle('light-mode'); }
+    
+    function changeFontSize(dir) {
+        let currentSize = parseInt(window.getComputedStyle(document.body).fontSize);
+        document.body.style.fontSize = (currentSize + (dir * 2)) + "px";
+    }
+</script>
+</body>
+</html>
