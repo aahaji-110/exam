@@ -5,259 +5,244 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أكاديمية الصحة - كتاب المدرب</title>
     <style>
-        /* تم تعديل المتغيرات لتصبح قيم الوضع الداكن هي الافتراضية */
         :root { 
-            --bg-color: #1a1a1a; 
-            --container-bg: #2d2d2d; 
-            --text-color: #ecf0f1; 
-            --primary-color: #2ecc71; 
-            --secondary-color: #3498db; 
+            --bg-color: #1e2124; 
+            --container-bg: #2f3136; 
+            --text-color: #e1e1e1; 
+            --primary-color: #588157; 
+            --secondary-color: #4a6fa5; 
             --mech-bg: #3d2b2b; 
             --mech-border: #822727; 
             --mech-text: #ecf0f1; 
+            --ans-bg: rgba(0,0,0,0.3);
+            --ans-text: #cbd5e1;
+            --dynamic-font: 16px; 
+            --timer-color: #588157;
         }
         
-        /* الوضع الفاتح أصبح هو الكلاس الاختياري */
         .light-mode { 
-            --bg-color: #f4f7f6; 
+            --bg-color: #f0f2f5; 
             --container-bg: #ffffff; 
-            --text-color: #2c3e50; 
-            --primary-color: #27ae60; 
-            --mech-bg: #fff5f5; 
-            --mech-border: #feb2b2; 
-            --mech-text: #2c3e50; 
+            --text-color: #1a1a1a; 
+            --primary-color: #386641; 
+            --secondary-color: #1d3557;
+            --ans-bg: #f1f5f9; 
+            --ans-text: #0f172a; 
+            --mech-bg: #fff5f5;
+            --mech-border: #feb2b2;
+            --mech-text: #2c3e50;
         }
         
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
             background-color: var(--bg-color); 
             color: var(--text-color); 
-            transition: 0.3s; 
             padding: 20px; 
             direction: rtl; 
             margin: 0; 
-            font-size: 18px; 
-            font-weight: bold;
+            font-weight: 600;
         }
-        
-        .top-nav { display: flex; justify-content: space-between; align-items: center; max-width: 900px; margin: 0 auto 20px auto; gap: 10px; flex-wrap: wrap; }
-        .tab-btn { padding: 12px 20px; cursor: pointer; border: none; border-radius: 8px; font-weight: 900; background: #bdc3c7; color: #2c3e50; transition: 0.3s; }
+
+        .section-divider {
+            display: flex; align-items: center; justify-content: center; margin: 50px 0 30px 0; position: relative;
+        }
+        .section-divider::before {
+            content: ""; position: absolute; width: 100%; height: 2px; background: rgba(128,128,128,0.2); z-index: 1;
+        }
+        .section-divider span { 
+            background: var(--primary-color); color: white; padding: 10px 30px; border-radius: 50px; 
+            font-size: 1.1rem; position: relative; z-index: 2; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .top-nav { display: flex; justify-content: space-between; align-items: center; max-width: 900px; margin: 0 auto 20px auto; }
+        .tabs-wrapper { background: #36393f; padding: 5px; border-radius: 12px; display: flex; gap: 5px; }
+        .tab-btn { padding: 10px 35px; cursor: pointer; border: none; border-radius: 8px; font-weight: 900; background: transparent; color: #96989d; }
         .tab-btn.active { background: var(--primary-color); color: white; }
         
-        .controls { display: flex; gap: 8px; align-items: center; }
-        .btn-ctrl { background: #2c3e50; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 18px; }
+        .controls { display: flex; gap: 8px; }
+        .btn-ctrl { background: #4f545c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
-        .container { background: var(--container-bg); padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); width: 100%; max-width: 900px; margin: 0 auto; position: relative; }
+        .container { background: var(--container-bg); padding: 40px; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); width: 100%; max-width: 900px; margin: 0 auto; }
         
-        .header-wrapper { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 20px; 
-            padding-bottom: 15px;
-            border-bottom: 2px solid #444; /* تكييف لون الخط مع الوضع الداكن */
-        }
-        .logo-section { flex: 1; text-align: right; }
-        .info-section { 
-            flex: 1; 
-            text-align: left; 
-            direction: ltr; 
-            font-family: 'Arial Black', Gadget, sans-serif;
-            color: var(--text-color); 
-            line-height: 1.2;
-        }
-        .info-section h3 { margin: 0; font-size: 24px; font-weight: 900; text-transform: uppercase; }
-        .info-section p { margin: 0; font-size: 18px; font-weight: 900; }
-        .logo-img { max-width: 160px; height: auto; }
+        .header-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid rgba(128,128,128,0.2); padding-bottom: 20px; }
+        .logo-img { max-width: 140px; }
 
-        h1 { text-align: center; color: var(--primary-color); font-size: 32px; border-bottom: 4px double var(--primary-color); padding-bottom: 10px; margin-top: 0; font-weight: 900; }
-        h2 { background: #2c3e50; color: white; padding: 10px; border-radius: 10px; font-size: 24px; margin-top: 30px; font-weight: 900; }
-
-        .mechanism-box { background: var(--mech-bg); border: 3px solid var(--mech-border); padding: 20px; border-radius: 12px; margin-bottom: 25px; text-align: center; line-height: 1.8; color: var(--mech-text); }
-        .mechanism-title { font-weight: 900; font-size: 24px; color: #ff5e5e; display: block; margin-bottom: 10px; text-decoration: underline; }
-        .warning-red { color: #ff5e5e; font-weight: 900; font-size: 20px; border: 2px dashed #ff5e5e; padding: 10px; display: inline-block; margin-top: 10px; }
-
-        #timer-container { 
-            position: fixed; 
-            top: 150px; 
-            left: 20px; 
-            width: 100px; 
-            padding: 5px 10px 10px 10px; 
-            background: var(--primary-color); 
-            color: white; 
-            border-radius: 15px; 
+        .mechanism-box { 
+            background: var(--mech-bg); 
+            border: 3px solid var(--mech-border); 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin-bottom: 25px; 
             text-align: center; 
-            z-index: 1000; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
-            user-select: none;
-            touch-action: none;
-            transition: background-color 0.3s;
+            color: var(--mech-text); 
         }
-        #timer-handle { cursor: move; background: rgba(0,0,0,0.1); padding: 4px; border-radius: 10px 10px 0 0; font-size: 12px; margin-bottom: 5px; }
-        #timer-display { font-size: 28px; font-weight: 900; display: block; }
-        
-        .question-block { background: var(--container-bg); border-right: 10px solid var(--secondary-color); padding: 18px; margin-bottom: 18px; border-radius: 0 12px 12px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.05); page-break-inside: avoid; }
-        .question-text { font-weight: 900; font-size: 20px; margin-bottom: 8px; display: block; color: var(--secondary-color); }
-        .answer-text { font-size: 17px; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; display: block; margin-bottom: 10px; border-left: 5px solid #555; white-space: pre-line; color: var(--text-color); }
-        .scenario-box { background: #453b1d; color: #ffe69c; padding: 15px; border-radius: 10px; font-style: italic; margin-bottom: 10px; border: 1px solid #66521a; font-size: 18px; font-weight: 800; }
-
-        .score-select { padding: 5px; border-radius: 8px; border: 2px solid var(--secondary-color); font-weight: 900; background: var(--container-bg); color: var(--text-color); font-size: 16px; }
-
-        .result-section { text-align: center; margin-top: 40px; padding: 30px; border-radius: 20px; border: 6px solid var(--primary-color); background: #2c3e50; color: white; display: none; }
-        .details-grid { display: flex; justify-content: space-around; margin-bottom: 20px; gap: 10px; flex-wrap: wrap; }
-        .detail-item { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; flex: 1; min-width: 150px; }
-        .detail-item span { display: block; font-size: 14px; opacity: 0.8; }
-        .detail-item strong { font-size: 24px; }
-        
-        .result-box-wrapper { display: inline-block; border: 4px solid var(--primary-color); padding: 10px 40px; border-radius: 15px; margin: 15px 0; background: #fff; }
-        .grandTotal { font-size: 55px; font-weight: 900; color: var(--primary-color); margin: 0; }
-        
-        .btn-main { background: var(--primary-color); color: white; border: none; padding: 15px; font-size: 22px; border-radius: 12px; cursor: pointer; width: 100%; font-weight: 900; margin-top: 15px; }
-
-        .footer-text { text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #444; font-size: 16px; color: #7f8c8d; width: 100%; }
+        .warning-red { 
+            color: #ff5e5e; 
+            font-weight: 900; 
+            border: 2px dashed #ff5e5e; 
+            padding: 5px; 
+            display: inline-block; 
+            margin-top: 10px;
+        }
 
         .page-content { display: none; }
         .page-active { display: block; }
 
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white !important; color: black !important; margin: 0 !important; padding: 0 !important; }
-            .container { max-width: 100% !important; border: none !important; background: white !important; zoom: 0.82; }
-            .question-block { border: 1px solid #ccc !important; background: white !important; color: black !important; }
-            .answer-text { background: #f9f9f9 !important; border-left: 5px solid #ccc !important; color: black !important; }
-            .info-section, .info-section h3, .info-section p { color: black !important; }
+        .dynamic-content-area { font-size: var(--dynamic-font); }
+        .question-text { font-weight: 900 !important; color: var(--secondary-color); font-size: 1.05em; display: block; margin-bottom: 8px; }
+        .question-block { background: rgba(128,128,128,0.05); border-right: 6px solid var(--secondary-color); padding: 20px; margin-bottom: 20px; border-radius: 0 15px 15px 0; }
+        
+        .answer-text { 
+            background: var(--ans-bg); 
+            color: var(--ans-text); 
+            padding: 15px; border-radius: 10px; display: block; white-space: pre-line; margin-top: 10px; 
+            border-left: 5px solid var(--primary-color); 
+            font-weight: 700;
         }
+        
+        .scenario-box { background: #3e3a2b; color: #e9d8a6; padding: 18px; border-radius: 12px; font-style: italic; margin-bottom: 15px; border: 1px solid #5e5335; }
+        .light-mode .scenario-box { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+
+        #timer-container { 
+            position: fixed; top: 150px; left: 30px; width: 100px; padding: 12px; 
+            background: #36393f; color: var(--timer-color); border-radius: 15px; text-align: center; 
+            z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.4); border: 2px solid var(--timer-color);
+            cursor: move; user-select: none; touch-action: none; transition: all 0.3s ease;
+        }
+        #timer-display { font-size: 2rem; display: block; font-weight: 900; margin: 5px 0; }
+        .btn-timer { background: var(--primary-color); color: white; border: none; border-radius: 8px; width: 100%; padding: 5px; cursor: pointer; font-weight: bold; }
+
+        .shake { animation: shake-animation 0.15s infinite; }
+        @keyframes shake-animation { 0% { transform: translate(0,0); } 25% { transform: translate(1px,0); } 75% { transform: translate(-1px,0); } 100% { transform: translate(0,0); } }
+
+        .result-section { text-align: center; margin: 40px auto; padding: 25px; border-radius: 20px; border: 3px solid var(--primary-color); background: var(--container-bg); color: var(--text-color); display: none; max-width: 450px; }
+        .res-total { font-size: 3.5rem; font-weight: 900; color: var(--primary-color); margin: 10px 0; }
+        .btn-main { background: var(--primary-color); color: white; border: none; padding: 18px; font-size: 1.2rem; border-radius: 15px; cursor: pointer; width: 100%; font-weight: 900; margin-top: 20px; }
+
+        @media print { .no-print { display: none !important; } }
     </style>
 </head>
-<body id="main-body">
+<body>
+
+<div id="timer-container" class="no-print">
+    <div style="font-size: 9px; opacity: 0.6; margin-bottom: 5px; color:white;">اسحب للتحريك</div>
+    <span id="timer-display">05</span>
+    <button class="btn-timer" onclick="startTimer()">ابدأ</button>
+</div>
 
 <div class="top-nav no-print">
-    <div class="tabs-container">
+    <div class="tabs-wrapper">
         <button class="tab-btn active" onclick="showPage('A', this)">صفحة A</button>
         <button class="tab-btn" onclick="showPage('B', this)">صفحة B</button>
     </div>
     <div class="controls">
-        <button class="btn-ctrl" onclick="changeFontSize(1)">+</button>
-        <button class="btn-ctrl" onclick="changeFontSize(-1)">-</button>
+        <button class="btn-ctrl" onclick="changeFontSize(1)">A+</button>
+        <button class="btn-ctrl" onclick="changeFontSize(-1)">A-</button>
         <button class="btn-ctrl" onclick="toggleMode()">☀️/🌙</button>
     </div>
 </div>
 
-<div id="timer-container" class="no-print">
-    <div id="timer-handle">⠿ اسحب هنا</div>
-    <span id="timer-display">05</span>
-    <button onclick="startTimer()" style="font-weight: 900; cursor: pointer; background:none; border:none; color:white; display:block; width:100%;">ابدأ</button>
-</div>
-
 <div class="container">
     <div class="header-wrapper">
-        <div class="logo-section">
-            <img src="https://www2.0zz0.com/2025/12/22/17/297618659.png" alt="Logo" class="logo-img">
-        </div>
-        <div class="info-section">
-            <h3>Ministry Of Health</h3>
-            <p>EMS Academy<br>Instructor HandBook</p>
+        <img src="https://www2.0zz0.com/2025/12/22/17/297618659.png" alt="Logo" class="logo-img">
+        <div style="text-align: left; direction: ltr; font-family: 'Arial Black';">
+            <h3 style="margin:0;">Ministry Of Health</h3>
+            <p style="margin:0;">EMS Academy<br>Instructor HandBook</p>
         </div>
     </div>
 
     <div class="mechanism-box">
-        <span class="mechanism-title">آلية الاختبار:</span>
+        <span style="font-weight: 900; font-size: 1.3rem; color: #ff5e5e; display: block; margin-bottom: 10px; text-decoration: underline;">آلية الاختبار:</span>
         <span>• 15 سؤال لكل متدرب</span><br>
         <span>• اختبار سيناريوهات</span><br>
         <span>• طريقة التأكد على حياة الرهائن</span><br>
         <span class="warning-red">5 ثواني في حال تأخرت عن الاجابة يعتبر السؤال ملغي وغير محسوب</span>
     </div>
 
-    <div id="pageA" class="page-content page-active">
-        <h1>اسئلة اختبار (A)</h1>
-        <div id="theory-questions-A"></div>
-        <div class="question-block extra-A">
-            <span class="question-text">سؤال إضافي: طريقة تمرير البلاغات الى الرتب العليا مثل M-0؟</span>
-            <span class="answer-text">(لا يحسب خطأ)</span>
-            الدرجة: <select class="score-select bonus-A"><option value="0">0</option><option value="1">1</option></select>
-        </div>
-        
-        <h2>السيناريوهات </h2>
-        <div class="question-block sc-A">
-            <span class="question-text">السيناريو الأول:</span>
-            <div class="scenario-box">"سجلت دخولي وباشرت في لوس سانتوس وانا في قطاع EMS وماكان فيه الا 3 وحدات رحت انا ومرافق لي لحالة 997 كان شخص مسقط بشكل كامل وعالجته في الموقع ورجعنا للمستشفى"</div>
-            <span class="answer-text">* عدم التواصل مع الدسباتش (1د) <br> * معالجة مسقط كامل بالخارج (1د) <br> * خروج من المشفى وهو في قطاع EMS (1د)</span>
-            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
-        </div>
-        <div class="question-block sc-A">
-            <span class="question-text">السيناريو الثاني:</span>
-            <div class="scenario-box">"اثناء مباشرة المسعف كدورية حره توجه لحالة جنائية وعند وصوله للموقع، اتضح ان الحالة لازالت قائمة ويوجد اطلاق نار بالموقع، انتظر المسعف بالموقع لحين انتهاء الحالة وعند انتهائها توجه للعساكر المسقطين بسبب طلاق نار وتم علاجهم بنفس الموقع."</div>
-            <span class="answer-text">* ما بلغ الديسباتش (1د) <br> * انتظر بالموقع والحالة لازالت قائمة (1د) <br> * عالج العساكر بنفس الموقع (1د)</span>
-            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+    <div class="dynamic-content-area">
+        <div id="pageA" class="page-content page-active">
+            <div class="section-divider"><span>القسم الأول: الأسئلة النظرية (A)</span></div>
+            <div id="theory-questions-A"></div>
+            <div class="question-block">
+                <span class="question-text">سؤال إضافي: طريقة تمرير البلاغات الى الرتب العليا مثل M-0؟</span>
+                <span class="answer-text">(لا يحسب خطأ)</span>
+                الدرجة: <select class="bonus-A"><option value="0">0</option><option value="1">1</option></select>
+            </div>
+
+            <div class="section-divider"><span>القسم الثاني: السيناريوهات (A)</span></div>
+            <div class="question-block sc-A">
+                <span class="question-text">السيناريو الأول:</span>
+                <div class="scenario-box">"سجلت دخولي وباشرت في لوس سانتوس وانا في قطاع EMS وماكان فيه الا 3 وحدات رحت انا ومرافق لي لحالة 997 كان شخص مسقط بشكل كامل وعالجته في الموقع ورجعنا للمستشفى"</div>
+                <span class="answer-text">* عدم التواصل مع الدسباتش (1د) <br> * معالجة مسقط كامل بالخارج (1د) <br> * خروج من المشفى وهو في قطاع EMS (1د)</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+            <div class="question-block sc-A">
+                <span class="question-text">السيناريو الثاني:</span>
+                <div class="scenario-box">"اثناء مباشرة المسعف كدورية حره توجه لحالة جنائية وعند وصوله للموقع، اتضح ان الحالة لازالت قائمة ويوجد اطلاق نار بالموقع، انتظر المسعف بالموقع لحين انتهاء الحالة وعند انتهائها توجه للعساكر المسقطين بسبب طلاق نار وتم علاجهم بنفس الموقع."</div>
+                <span class="answer-text">* ما بلغ الديسباتش (1د) <br> * انتظر بالموقع والحالة لازالت قائمة (1د) <br> * عالج العساكر بنفس الموقع (1د)</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+
+            <div class="section-divider"><span>القسم الثالث: الجانب العملي (A)</span></div>
+            <div class="question-block pr-A">
+                <span class="question-text">طريقة التأكد من حياة الرهائن:</span>
+                <span class="answer-text">* التعريف بنفسه (1د) <br> * سؤال المواطن عن وضعه الصحي وطريقة التعامل مع المجرمين معه + علاج في حال وجود إصابات أقل من 3 (1د) <br> * تحديث الحالة لمسؤول الحالة لدى العساكر و الدسباتش (1د)</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+            <div class="question-block pr-A">
+                <span class="question-text">طريقة العلاج بشكل كامل:</span>
+                <span class="answer-text">* استخراج السرير (1د) <br> * التأكد من الاصابات (1د) <br> * العلاج (1د)</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+            <button class="btn-main no-print" onclick="processResult('A')">إعتماد النتيجة النهائية (A)</button>
         </div>
 
-        <h2>الجانب العملي </h2>
-        <div class="question-block pr-A">
-            <span class="question-text">طريقة التأكد من حياة الرهائن:</span>
-            <span class="answer-text">* التعريف بنفسه (1د) <br> * سؤال المواطن عن وضعه الصحي وطريقة التعامل مع المجرمين معه + علاج في حال وجود إصابات أقل من 3 (1د) <br> * تحديث الحالة لمسؤول الحالة لدى العساكر و الدسباتش (1د)</span>
-            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
-        </div>
-        <div class="question-block pr-A">
-            <span class="question-text">طريقة العلاج بشكل كامل:</span>
-            <span class="answer-text">* استخراج السرير (1د) <br> * التأكد من الاصابات (1د) <br> * العلاج (1د)</span>
-            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
-        </div>
-        <button class="btn-main no-print" onclick="processResult('A')">إعتماد النتيجة</button>
-    </div>
+        <div id="pageB" class="page-content">
+            <div class="section-divider"><span>القسم الأول: الأسئلة النظرية (B)</span></div>
+            <div id="theory-questions-B"></div>
 
-    <div id="pageB" class="page-content">
-        <h1>اسئلة اختبار (B)</h1>
-        <div id="theory-questions-B"></div>
-        
-        <h2>السيناريوهات </h2>
-        <div class="question-block sc-B">
-            <span class="question-text">السيناريو الأول:</span>
-            <div class="scenario-box">"وجهك الدسباتش كوحده حره في لوس وماعندك حالات و طلب منك مواطن توصله للمطعم وصلته ونزلت معاه واخذت وجبات ولقيت الموظف ينزف عنده اربع اصابات عالجته ورجعت للمستشفى"</div>
-            <span class="answer-text">* ممنوع توصيل مواطنين (1د) <br> * ممنوع التوجه للمطعم بدون اذن الدسباتش (1د) <br> * ممنوع معالجة اكثر من 3 اصابات (1د)</span>
-            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
-        </div>
-        <div class="question-block sc-B">
-            <span class="question-text">السيناريو الثاني:</span>
-            <div class="scenario-box">"اثناء مباشرة المسعف كدورية حره توجه لحالة جنائية وعند وصوله للموقع، اتضح ان الحالة لازالت قائمة ويوجد اطلاق نار بالموقع، انتظر المسعف بالموقع لحين انتهاء الحالة وعند انتهائها توجه للعساكر المسقطين بسبب طلاق نار وتم علاجهم بنفس الموقع."</div>
-            <span class="answer-text">* ما اخذ اذن من الدسباتش (1د) <br> * انتظر بالموقع والحالة لازالت قائمة (1د) <br> * عالج العساكر بنفس الموقع (1د)</span>
-            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
-        </div>
+            <div class="section-divider"><span>القسم الثاني: السيناريوهات (B)</span></div>
+            <div class="question-block sc-B">
+                <span class="question-text">السيناريو الأول:</span>
+                <div class="scenario-box">"وجهك الدسباتش كوحده حره في لوس وماعندك حالات و طلب منك مواطن توصله للمطعم وصلته ونزلت معاه واخذت وجبات ولقيت الموظف ينزف عنده اربع اصابات عالجته ورجعت للمستشفى"</div>
+                <span class="answer-text">* ممنوع توصيل مواطنين (1د) <br> * ممنوع التوجه للمطعم بدون اذن الدسباتش (1د) <br> * ممنوع معالجة اكثر من 3 اصابات (1د)</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+            <div class="question-block sc-B">
+                <span class="question-text">السيناريو الثاني:</span>
+                <div class="scenario-box">"اثناء مباشرة المسعف كدورية حره توجه لحالة جنائية وعند وصوله للموقع، اتضح ان الحالة لازالت قائمة ويوجد اطلاق نار بالموقع، انتظر المسعف بالموقع لحين انتهاء الحالة وعند انتهائها توجه للعساكر المسقطين بسبب طلاق نار وتم علاجهم بنفس الموقع."</div>
+                <span class="answer-text">* ما اخذ اذن من الدسباتش (1د) <br> * انتظر بالموقع والحالة لازالت قائمة (1د) <br> * عالج العساكر بنفس الموقع (1د)</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
 
-        <h2>الجانب العملي </h2>
-        <div class="question-block pr-B">
-            <span class="question-text">طريقة التأكد من حياة الرهائن:</span>
-            <span class="answer-text">* التعريف بنفسه (1د) <br> * سؤال المواطن عن وضعه الصحي وطريقة التعامل مع المجرمين معه + علاج في حال وجود إصابات أقل من 3 (1د) <br> * تحديث الحالة لمسؤول الحالة لدى العساكر و الدسباتش (1د)</span>
-            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            <div class="section-divider"><span>القسم الثالث: الجانب العملي (B)</span></div>
+            <div class="question-block pr-B">
+                <span class="question-text">طريقة التأكد من حياة الرهائن:</span>
+                <span class="answer-text">* التعريف بنفسه (1د) <br> * سؤال المواطن عن وضعه الصحي وطريقة التعامل مع المجرمين معه + علاج في حال وجود إصابات أقل من 3 (1د) <br> * تحديث الحالة لمسؤول الحالة لدى العساكر و الدسباتش (1د)</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+            <div class="question-block pr-B">
+                <span class="question-text">طريقة العلاج بشكل كامل:</span>
+                <span class="answer-text">* استخراج السرير (1د) <br> * التأكد من الاصابات (1د) <br> * العلاج (1د)</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+            <button class="btn-main no-print" onclick="processResult('B')">إعتماد النتيجة النهائية (B)</button>
         </div>
-        <div class="question-block pr-B">
-            <span class="question-text">طريقة العلاج بشكل كامل:</span>
-            <span class="answer-text">* استخراج السرير (1د) <br> * التأكد من الاصابات (1د) <br> * العلاج (1د)</span>
-            الدرجة: <select class="score-select"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
-        </div>
-        <button class="btn-main no-print" onclick="processResult('B')">إعتماد النتيجة</button>
     </div>
 
     <div id="resultArea" class="result-section">
-        <h2>تفاصيل النتيجة النهائية</h2>
-        <div class="details-grid">
-            <div class="detail-item">
-                <span>درجات النظري</span>
-                <strong id="theorySubtotal">0</strong>
-            </div>
-            <div class="detail-item">
-                <span>درجات العملي</span>
-                <strong id="practicalSubtotal">0</strong>
-            </div>
+        <h2 style="margin-top:0; color: var(--primary-color);">النتيجة النهائية</h2>
+        <div style="display:flex; justify-content:space-around; margin:20px 0; font-size: 1.2rem;">
+            <span>مجموع النظري: <strong id="theorySub">0</strong></span>
+            <span>مجموع العملي: <strong id="pracSub">0</strong></span>
         </div>
-        <span>المجموع الكلي:</span>
-        <div class="result-box-wrapper"><div class="grandTotal" id="resTotal">0</div></div>
-        <div id="resStatus" style="font-size: 32px; margin: 15px 0; font-weight: 900;">--</div>
+        <div class="res-total" id="resTotal">0</div>
+        <div id="resStatus" style="font-size: 1.8rem; margin-top: 10px;">--</div>
     </div>
-    <div class="footer-text">جميع الحقوق محفوظه لأكاديمية الصحة في MT | برمجة علي الحاجي ali_go </div>
 </div>
 
 <script>
-    const qA = [
+    const qDataA = [
         {q: "1- اذكر لي انواع الحالات التي لا يتم علاجها بالخارج؟", a: "• اصابة بالرأس • اربع اصابات او اكثر • مسقط بشكل كامل • مسقط بطلق نار"},
         {q: "2- اذكر الحالات التي يتم فيها استخراج سيارة الفان؟", a: "• في حال عدد المسقطين كبير (من 5 الى 7 ) وداخل لوس"},
         {q: "3- ما الفرق بين قطاع paramedic وقطاع ems؟", a: "• التواجد بالمستشفى واستقبال الحالات | • التوزع بالميدان ونقل المستقطين"},
@@ -275,20 +260,20 @@
         {q: "15- متى يحق لك استخراج مركبة الدرانقو والجيب؟", a: "درانقو (ادفانس) | جيب (ماستر) او من مسؤل الفترة"}
     ];
 
-    const qB = [
+    const qDataB = [
         {q: "1- اذكر لي انواع الحالات التي لا يتم علاجها بالخارج؟", a: "• اصابة بالرأس - اربع اصابات او اكثر - مسقط بشكل كامل - مسقط بطلق نار"},
         {q: "2- ماهو قطاع المسؤول عن نقل المسقطين؟", a: "• paramedic"},
         {q: "3- ماهي الحالات التي يتم فيها تكفين المسقط ؟", a: "• المتفجر • المنتحر • المحترق"},
         {q: "4- ماهي استخدامات غرفة الـ icu ؟ ومن المصرح لهم اقفالها؟", a: "• معالجة المجرمين\n• وزير الداخلية ونائبه+دايركتر جنرال + جينيرالات+رئيس الشرطه ونائبة رئيس القانق يونت."},
         {q: "5- ماهو كود blane county في بروتوكولات الراديو ؟", a: "• 12-10"},
-        {q: "6- ماهو كود red في بروتوكولات الراديو ؟", a: "اذا كانت غرفة الطوارئ فيها عدد كبير من المسقطين / جميع الوحدات الشاغره في المستشفى تتوجه الى غرفة الطوارئ"},
+        {q: "6- ماهو كود red في بروتوكولات الراديو ؟", a: "جميع الوحدات الشاغره تتوجه الى غرفة الطوارئ"},
         {q: "7- ماهو كود الغاء البلاغ في بروتوكولات الراديو ؟", a: "• 0-4"},
         {q: "8- اذكر الحالات التي يتم فيها استخراج سيارة الفان؟", a: "في حال عدد المسقطين كبير (من 5 الى 7) وداخل لوس"},
         {q: "9- ماهي مركبات المسموحه لرتبه ال EMR؟", a: "تاهو - فان"},
         {q: "10- اذكر التصرف الصحيح في حال جاك مواطن مصاب وغير محترم؟ + جاك مواطن يبي يتعالج ورافض ينزع الماسك ؟ + جاك عسكري وهاوشك او قدم لك اساءه + جاء مواطن وهرب مجرم امامك والعساكر مو منتبهين؟ + هل يحق لك نطح المجرم ومساعدة العساكر في القبض عليه؟ (درجة واحدة)", a: "(لمدرب مخير في اختيار السؤال إما جميعها او يختار كم واحد منها والدرجة تقديريه)"},
         {q: "11- ماهي شروط صرف العكاز او الكرسي المتحرك ؟ والمدة؟ ", a: "عكاز: قدم (شهر) | كرسي: قدمين (شهرين)"},
         {q: "12- متى يحق لك نقل المجرمين ومعالجتهم بدون وحدات عسكرية ؟", a: "لا يحق لك ابد بدون وحدات عسكريه"},
-        {q: "13- متى يحق لك مقاطعة بلاغات الراديو؟", a: "مايحق لك ، ممنوع مقاطعة البلاغات"},
+        {q: "13- متى يحق لك مقاطعة بلاغات الراديو؟", a: "ممنوع مقاطعة البلاغات"},
         {q: "14- في حال احتجت وحدات دعم اذكر لي طريقة البلاغ الصحيحة؟", a: "تو دسباتش.. احتاج تن توني ثري.. تن فور ارفع pick up"},
         {q: "15- من يحق له استخراج الايرشب؟", a: "حامل الونق"}
     ];
@@ -296,34 +281,23 @@
     function gen(cId, list, prefix) {
         const c = document.getElementById(cId);
         list.forEach((item, i) => {
-            c.innerHTML += `<div class="question-block th-${prefix}"><span class="question-text">${item.q}</span><span class="answer-text">${item.a}</span><div class="check-group no-print"><label><input type="radio" name="${prefix}_q${i}" value="1"> صح ✅</label><label><input type="radio" name="${prefix}_q${i}" value="0" checked> خطأ ❌</label></div></div>`;
+            c.innerHTML += `<div class="question-block th-${prefix}"><span class="question-text">${item.q}</span><span class="answer-text">${item.a}</span><div class="no-print" style="margin-top:10px;"><label style="margin-left:15px;"><input type="radio" name="${prefix}_q${i}" value="1"> صح ✅</label> <label><input type="radio" name="${prefix}_q${i}" value="0"> خطأ ❌</label></div></div>`;
         });
     }
-    gen('theory-questions-A', qA, 'A');
-    gen('theory-questions-B', qB, 'B');
+    gen('theory-questions-A', qDataA, 'A');
+    gen('theory-questions-B', qDataB, 'B');
 
-    function processResult(type) {
-        let th = 0, sc = 0, pr = 0, b = 0;
-        document.querySelectorAll(`.th-${type} input[type="radio"]:checked`).forEach(i => th += parseInt(i.value));
-        document.querySelectorAll(`.sc-${type} select`).forEach(s => sc += parseInt(s.value));
-        document.querySelectorAll(`.pr-${type} select`).forEach(p => pr += parseInt(p.value));
-        if(type === 'A') b = parseInt(document.querySelector('.bonus-A').value);
-        
-        const theoryTotal = th + sc + b;
-        const practicalTotal = pr;
-        const total = theoryTotal + practicalTotal;
-        
-        document.getElementById('theorySubtotal').innerText = theoryTotal;
-        document.getElementById('practicalSubtotal').innerText = practicalTotal;
-        document.getElementById('resTotal').innerText = total;
-        
-        const st = document.getElementById('resStatus');
-        if (total >= 20) { st.innerText = "ناجح ✅"; st.style.color = "#2ecc71"; }
-        else if (total >= 15) { st.innerText = "ينظر في أمره ⚠️"; st.style.color = "#f39c12"; }
-        else { st.innerText = "راسب ❌"; st.style.color = "#e74c3c"; }
-        
-        document.getElementById('resultArea').style.display = 'block';
-        window.scrollTo({ top: document.getElementById('resultArea').offsetTop, behavior: 'smooth' });
+    const dragItem = document.getElementById("timer-container");
+    let active = false, currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
+    dragItem.addEventListener("mousedown", (e) => { if(e.target.tagName !== 'BUTTON') { initialX = e.clientX - xOffset; initialY = e.clientY - yOffset; active = true; } });
+    document.addEventListener("mouseup", () => active = false);
+    document.addEventListener("mousemove", (e) => { if (active) { e.preventDefault(); currentX = e.clientX - initialX; currentY = e.clientY - initialY; xOffset = currentX; yOffset = currentY; dragItem.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`; } });
+
+    function showPage(pId, btn) {
+        document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
+        document.getElementById('page' + pId).style.display = 'block';
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
     }
 
     let timerInt;
@@ -332,55 +306,40 @@
         let time = 5;
         const display = document.getElementById('timer-display');
         const container = document.getElementById('timer-container');
-        display.innerText = "05";
-        container.style.backgroundColor = "var(--primary-color)";
-        timerInt = setInterval(() => {
-            time--;
+        container.classList.remove('shake');
+        const update = () => {
             display.innerText = (time < 10 ? "0" : "") + time;
-            if (time === 3) container.style.backgroundColor = "#e67e22"; 
-            else if (time <= 1) container.style.backgroundColor = "#e74c3c"; 
-            if(time <= 0) { clearInterval(timerInt); alert("انتهى الوقت!"); }
-        }, 1000);
+            if(time >= 3) { container.style.borderColor = "#2ecc71"; container.style.color = "#2ecc71"; }
+            else if(time === 2) { container.style.borderColor = "#f1c40f"; container.style.color = "#f1c40f"; }
+            else if(time === 1) { container.style.borderColor = "#e74c3c"; container.style.color = "#e74c3c"; container.classList.add('shake'); }
+            if(time <= 0) { clearInterval(timerInt); container.classList.remove('shake'); alert("انتهى الوقت!"); }
+            time--;
+        };
+        update(); timerInt = setInterval(update, 1000);
     }
 
-    const timerBox = document.getElementById("timer-container");
-    const timerHandle = document.getElementById("timer-handle");
-    let isDragging = false, offsetX, offsetY;
-    const dragStart = (e) => {
-        isDragging = true;
-        const clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
-        const clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
-        offsetX = clientX - timerBox.getBoundingClientRect().left;
-        offsetY = clientY - timerBox.getBoundingClientRect().top;
-    };
-    const dragging = (e) => {
-        if (!isDragging) return;
-        const clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
-        const clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
-        timerBox.style.left = (clientX - offsetX) + "px";
-        timerBox.style.top = (clientY - offsetY) + "px";
-    };
-    timerHandle.addEventListener("mousedown", dragStart);
-    document.addEventListener("mousemove", dragging);
-    document.addEventListener("mouseup", () => isDragging = false);
-    timerHandle.addEventListener("touchstart", dragStart);
-    document.addEventListener("touchmove", dragging, { passive: false });
-    document.addEventListener("touchend", () => isDragging = false);
-
-    function showPage(pId, btn) {
-        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('page-active'));
-        document.getElementById('page' + pId).classList.add('page-active');
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('resultArea').style.display = 'none';
+    function processResult(type) {
+        let th = 0, sc = 0, pr = 0, b = 0;
+        document.querySelectorAll(`.th-${type} input:checked`).forEach(i => th += parseInt(i.value));
+        document.querySelectorAll(`.sc-${type} select`).forEach(s => sc += parseInt(s.value));
+        document.querySelectorAll(`.pr-${type} select`).forEach(p => pr += parseInt(p.value));
+        if(type === 'A') b = parseInt(document.querySelector('.bonus-A').value);
+        
+        const theoryTotal = th + sc + b;
+        const total = theoryTotal + pr;
+        
+        document.getElementById('theorySub').innerText = theoryTotal;
+        document.getElementById('pracSub').innerText = pr;
+        document.getElementById('resTotal').innerText = total;
+        const st = document.getElementById('resStatus');
+        st.innerText = total >= 20 ? "ناجح ✅" : (total >= 15 ? "ينظر في أمره ⚠️" : "راسب ❌");
+        document.getElementById('resultArea').style.display = 'block';
+        document.getElementById('resultArea').scrollIntoView({ behavior: 'smooth' });
     }
-    
-    // تعديل الوظيفة لتبديل الوضع الفاتح بدلاً من الداكن
     function toggleMode() { document.body.classList.toggle('light-mode'); }
-    
     function changeFontSize(dir) {
-        let currentSize = parseInt(window.getComputedStyle(document.body).fontSize);
-        document.body.style.fontSize = (currentSize + (dir * 2)) + "px";
+        let current = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--dynamic-font'));
+        document.documentElement.style.setProperty('--dynamic-font', (current + dir) + 'px');
     }
 </script>
 </body>
