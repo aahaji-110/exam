@@ -43,6 +43,40 @@
             font-weight: 600;
         }
 
+        /* تنسيق القوائم المنسدلة */
+        select {
+            padding: 5px 12px;
+            font-size: 1rem;
+            font-weight: 800;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        select:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            filter: brightness(1.1);
+        }
+
+        select:focus {
+            border-color: white;
+            box-shadow: 0 0 0 2px rgba(88, 129, 87, 0.4);
+        }
+
+        select option {
+            background-color: var(--container-bg);
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
         .section-divider {
             display: flex; align-items: center; justify-content: center; margin: 50px 0 30px 0; position: relative;
         }
@@ -116,8 +150,21 @@
         @keyframes shake-animation { 0% { transform: translate(0,0); } 25% { transform: translate(1px,0); } 75% { transform: translate(-1px,0); } 100% { transform: translate(0,0); } }
 
         .result-section { text-align: center; margin: 40px auto; padding: 25px; border-radius: 20px; border: 3px solid var(--primary-color); background: var(--container-bg); color: var(--text-color); display: none; max-width: 450px; }
-        .res-total { font-size: 3.5rem; font-weight: 900; color: var(--primary-color); margin: 10px 0; }
+        .res-total { font-size: 3.5rem; font-weight: 900; margin: 10px 0; transition: color 0.3s ease; }
         .btn-main { background: var(--primary-color); color: white; border: none; padding: 18px; font-size: 1.2rem; border-radius: 15px; cursor: pointer; width: 100%; font-weight: 900; margin-top: 20px; }
+
+        .footer-credits {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid rgba(128,128,128,0.2);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+        .footer-credits strong { color: var(--primary-color); }
+        .footer-credits span { color: var(--secondary-color); font-family: monospace; font-weight: bold; }
 
         @media print { .no-print { display: none !important; } }
     </style>
@@ -239,6 +286,11 @@
         <div class="res-total" id="resTotal">0</div>
         <div id="resStatus" style="font-size: 1.8rem; margin-top: 10px;">--</div>
     </div>
+
+    <div class="footer-credits">
+        جميع الحقوق محفوظة لـ <strong>أكاديمية الصحة</strong> في سيرفر MT <br>
+        برمجة <strong>علي الحاجي</strong> | Discord: <span>ali_go</span>
+    </div>
 </div>
 
 <script>
@@ -330,12 +382,30 @@
         
         document.getElementById('theorySub').innerText = theoryTotal;
         document.getElementById('pracSub').innerText = pr;
-        document.getElementById('resTotal').innerText = total;
-        const st = document.getElementById('resStatus');
-        st.innerText = total >= 20 ? "ناجح ✅" : (total >= 15 ? "ينظر في أمره ⚠️" : "راسب ❌");
+        
+        const resDisplay = document.getElementById('resTotal');
+        const statusDisplay = document.getElementById('resStatus');
+        
+        resDisplay.innerText = total;
+
+        if (total >= 20) {
+            statusDisplay.innerText = "ناجح ✅";
+            statusDisplay.style.color = "#2ecc71";
+            resDisplay.style.color = "#2ecc71"; // أخضر
+        } else if (total >= 15) {
+            statusDisplay.innerText = "ينظر في أمره ⚠️";
+            statusDisplay.style.color = "#f39c12";
+            resDisplay.style.color = "#f39c12"; // برتقالي
+        } else {
+            statusDisplay.innerText = "راسب ❌";
+            statusDisplay.style.color = "#e74c3c";
+            resDisplay.style.color = "#e74c3c"; // أحمر
+        }
+
         document.getElementById('resultArea').style.display = 'block';
         document.getElementById('resultArea').scrollIntoView({ behavior: 'smooth' });
     }
+
     function toggleMode() { document.body.classList.toggle('light-mode'); }
     function changeFontSize(dir) {
         let current = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--dynamic-font'));
