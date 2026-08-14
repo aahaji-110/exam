@@ -43,7 +43,6 @@
             font-weight: 600;
         }
 
-        /* تنسيق القوائم المنسدلة وحقول الإدخال */
         select, input[type="text"] {
             padding: 8px 12px;
             font-size: 1rem;
@@ -126,7 +125,7 @@
         }
 
         .page-content { display: none; }
-        .page-active { display: block; }
+        .page-content.page-active { display: block !important; }
 
         .dynamic-content-area { font-size: var(--dynamic-font); }
         .question-text { font-weight: 900 !important; color: var(--secondary-color); font-size: 1.05em; display: block; margin-bottom: 8px; }
@@ -171,7 +170,6 @@
             width: 45%; min-width: 200px; box-sizing: border-box;
         }
 
-        /* جدول النتائج التجميعي */
         .results-table-container { margin-top: 30px; overflow-x: auto; }
         .results-table { width: 100%; border-collapse: collapse; margin-top: 15px; text-align: center; }
         .results-table th, .results-table td { border: 1px solid rgba(128,128,128,0.3); padding: 12px 8px; font-size: 0.95rem; }
@@ -191,7 +189,6 @@
         .footer-credits strong { color: var(--primary-color); }
         .footer-credits span { color: var(--secondary-color); font-family: monospace; font-weight: bold; }
 
-        /* إعدادات طباعة وتصدير PDF */
         @media print { 
             .no-print, 
             #timer-container, 
@@ -223,6 +220,7 @@
 <div class="top-nav no-print">
     <div class="tabs-wrapper">
         <button class="tab-btn active" onclick="showPage('A', this)">نموذج A</button>
+        <button class="tab-btn" onclick="showPage('B', this)">نموذج B</button>
     </div>
     <div class="controls">
         <button class="btn-ctrl" onclick="changeFontSize(1)">A+</button>
@@ -296,7 +294,51 @@
                 <span class="answer-text">• عند الوصول الى الموقع التعرف بنفسه عند مسؤول الحالة او المفاوض <br> • الدخول مع العسكري <br> • التعريف عن نفسه عند المواطن بالكود والقطاع <br> • السؤال عن حالته وهل تم إيذائه <br> • فحصة فحص مبدئي <br> • تسليم التقرير لمسؤول الحالة شفهياً</span>
                 الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
             </div>
-            <button class="btn-main no-print" onclick="processResult('A')">إعتماد النتيجة وإضافتها للكشف</button>
+            <button class="btn-main no-print" onclick="processResult('A')">إعتماد النتيجة وإضافتها للكشف (نموذج A)</button>
+        </div>
+
+        <!-- نموذج B -->
+        <div id="pageB" class="page-content">
+            <div class="section-divider"><span>القسم الأول: الأسئلة النظرية</span></div>
+            <div id="theory-questions-B"></div>
+            <div class="question-block">
+                <span class="question-text">سؤال إضافي: كيف يتم نداء معاليها M-0 في الموجه ؟</span>
+                <span class="answer-text">(على حسب المدرب - سؤال اختياري)</span>
+                الدرجة: <select class="bonus-B"><option value="0">0</option><option value="1">1</option></select>
+            </div>
+
+            <div class="section-divider"><span>القسم الثاني: السيناريوهات</span></div>
+            <div class="question-block sc-B">
+                <span class="question-text">السيناريو الأول:</span>
+                <div class="scenario-box">"اثناء مباشرة المسعف كدورية حره توجه لحالة جنائية وعند وصوله للموقع، اتضح ان الحالة لازالت قائمة ويوجد اطلاق نار بالموقع، انتظر المسعف بالموقع لحين انتهاء الحالة وعند انتهائها توجه للعساكر المسقطين بسبب طلاق نار وتم علاجهم بنفس الموقع."</div>
+                <span class="answer-text">الحل:<br>1- مابلغ الديسباتش <br>2- انتظر بالموقع والحالة لازالت قائمة <br>3- عالج العساكر بنفس الموقع</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+            <div class="question-block sc-B">
+                <span class="question-text">السيناريو الثاني:</span>
+                <div class="scenario-box">"وردنا بلاغ في الموجه من احد العساكر بوجود سجين مصاب في الزنزانات وبعد توجيهك من قبل الدس باتش والوصول الى مركز الشرطه توجهت الى موجة العساكر وطلبت منهم اذن الدخول وبعدها كشفت على السجين وكان يعاني من اصابتين ويحتاج الى اشعة وطلب منك العسكري بعلاجه مايستعدي الذهاب الى المستشفى وعالجته ورجعت الى المستشفى وسجلت خروجك"</div>
+                <span class="answer-text">الحل:<br>1- التوجه الى موجة العساكر بدون اذن الدسباتش <br>2- علاج بالموقع والشخص يحتاج الى اشعة <br>3- مابلغت انتهاء الحالة وسجلت خروجك مباشرة</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+            <div class="question-block sc-B">
+                <span class="question-text">السيناريو الثالث:</span>
+                <div class="scenario-box">"وردنا بلاغ 997 وعند تاكدي تبين لي ان الحاله بالقرب مني ثم طلبت من الدسباتش اذن بالتوجه للحاله واعطاني الاذن بالتوجه وعند وصولي تبين لي ان الحاله عباره عن اشتباك ناري بين العساكر والمواطنين وحالة طلق النار مازالت قائمه وكان هناك عسكري مسقط بالقرب مني استطعت ان انقله لمكان امن ثم عالجت العسكري لعدم حاجته لتصوير الاشعه ثم بلغت الدسباتش بانتهاء الحاله وعدت الى المستشفى"</div>
+                <span class="answer-text">الحل:<br>* طلب توجيه من الدس باتش <br>* عدم الابتعاد رغم وجود طلق ناري <br>* معالجة العسكري وهو مسقط من اطلاق ناري</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+
+            <div class="section-divider"><span>القسم الثالث: الجانب العملي</span></div>
+            <div class="question-block pr-B">
+                <span class="question-text">طريقة العلاج بشكل كامل:</span>
+                <span class="answer-text">االخطوات: <br> • استخراج السرير <br> • السؤال عن حالة الشخص <br> • التأكد من الإصابات في حال احتاج الى اشعة التوجه الى غرفة الاشعة وفي حالة عدم الحاجة المباشرة بالعلاج <br><br> طريقة العلاج: <br> • التأكد بالسماعة <br> • اخذ عينة من الدم <br> • اخذ اشعلة في حالة الحاجة</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+            <div class="question-block pr-B">
+                <span class="question-text">الاطمئنان على حالة الرهائن:</span>
+                <span class="answer-text">• عند الوصول الى الموقع التعرف بنفسه عند مسؤول الحالة او المفاوض <br> • الدخول مع العسكري <br> • التعريف عن نفسه عند المواطن بالكود والقطاع <br> • السؤال عن حالته وهل تم إيذائه <br> • فحصة فحص مبدئي <br> • تسليم التقرير لمسؤول الحالة شفهياً</span>
+                الدرجة: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
+            </div>
+            <button class="btn-main no-print" onclick="processResult('B')">إعتماد النتيجة وإضافتها للكشف (نموذج B)</button>
         </div>
     </div>
 
@@ -305,7 +347,7 @@
         
         <!-- صندوق النتيجة الفردية الحالية -->
         <div class="single-result-box no-print">
-            <h2 style="margin-top:0; color: var(--primary-color);">النتيجة الحالية للمتدرب</h2>
+            <h2 style="margin-top:0; color: var(--primary-color);">النتيجة الحالية للمتدرب (<span id="resModel">--</span>)</h2>
             <div style="font-size: 1.1rem; margin-bottom: 10px;">
                 <span>الاسم: <strong id="resStudentName">--</strong></span> | 
                 <span>الكود: <strong id="resStudentCode">--</strong></span>
@@ -327,6 +369,7 @@
                         <th>#</th>
                         <th>اسم المتدرب</th>
                         <th>كود المتدرب</th>
+                        <th>النموذج</th>
                         <th>درجة النظري</th>
                         <th>درجة العملي</th>
                         <th>المجموع</th>
@@ -365,15 +408,34 @@
         {q: "10- اذكر أنواع الحالات التي لا يتم علاجها خارج المستشفى ؟", a: "المسقط بشكل كامل + الشخص الذي يحتاج الى عمل اشعة"}
     ];
 
+    const qDataB = [
+        {q: "1- اذكر أنواع الحالات التي لا يتم علاجها خارج المستشفى ؟", a: "المسقط بشكل كامل + الشخص الذي يحتاج الى عمل اشعة"},
+        {q: "2- ماهي الحالات التي لا يتم علاجها نهائياً ؟", a: "المنتحر والمتفجر (يتم تكفينهم)"},
+        {q: "3- وش يعني كود بينك ؟", a: "هذا يستخدم عند فقدان أحد المجرمين من المستشفى "},
+        {q: "4- ما هو التصرف الصحيح في حال شاهدت مسعفا اخر مستهتر وغير منضبط في الميدان ؟", a: "نصحه او توجيه استهتاره للشؤون"},
+        {q: "5- ايش يعني 10-4 ؟", a: "علم / مفهوم / استلمت"},
+        {q: "6- ماهو الكود الخاص بطلب دعم ؟", a: "10-23"},
+        {q: "7- ماذا يعني كود 4 ؟", a: "الموقع امن او لا يوجد اي حالة"},
+        {q: "8- ما هو الموقف الذي يستخدم فيه كود 1- 0", a: "اخذ غفوه او استراحة لمدة معينة يتم ذكرها"},
+        {q: "9- كم العدد المسموح لتوزيع الأدوات الطبية على العساكر والمواطنين ؟", a: "غير مسموح توزيع الادوات الطبية اطلاقا ( باند )"},
+        {q: "10- من يحق له استخراج الهيلي او الايرشب ؟", a: "من لديه وينق الهيلي / الايرشب"}
+    ];
+
     let traineesList = [];
 
     function gen(cId, list, prefix) {
         const c = document.getElementById(cId);
+        if(!c) return;
+        c.innerHTML = "";
         list.forEach((item, i) => {
             c.innerHTML += `<div class="question-block th-${prefix}"><span class="question-text">${item.q}</span><span class="answer-text">${item.a}</span><div class="no-print" style="margin-top:10px;"><label style="margin-left:15px;"><input type="radio" name="${prefix}_q${i}" value="1"> صح ✅</label> <label><input type="radio" name="${prefix}_q${i}" value="0"> خطأ ❌</label></div></div>`;
         });
     }
-    gen('theory-questions-A', qDataA, 'A');
+
+    window.addEventListener('DOMContentLoaded', () => {
+        gen('theory-questions-A', qDataA, 'A');
+        gen('theory-questions-B', qDataB, 'B');
+    });
 
     const dragItem = document.getElementById("timer-container");
     let active = false, currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
@@ -382,10 +444,20 @@
     document.addEventListener("mousemove", (e) => { if (active) { e.preventDefault(); currentX = e.clientX - initialX; currentY = e.clientY - initialY; xOffset = currentX; yOffset = currentY; dragItem.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`; } });
 
     function showPage(pId, btn) {
-        document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
-        document.getElementById('page' + pId).style.display = 'block';
+        const pages = document.querySelectorAll('.page-content');
+        pages.forEach(p => {
+            p.classList.remove('page-active');
+            p.style.display = 'none';
+        });
+        
+        const selectedPage = document.getElementById('page' + pId);
+        if(selectedPage) {
+            selectedPage.classList.add('page-active');
+            selectedPage.style.display = 'block';
+        }
+        
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        if(btn) btn.classList.add('active');
     }
 
     let timerInt;
@@ -440,6 +512,7 @@
             statusColor = "#e74c3c";
         }
 
+        document.getElementById('resModel').innerText = "نموذج " + type;
         document.getElementById('resStudentName').innerText = nameInput;
         document.getElementById('resStudentCode').innerText = codeInput;
         document.getElementById('theorySub').innerText = theoryTotal;
@@ -453,11 +526,11 @@
         statusDisplay.innerText = statusText;
         statusDisplay.style.color = statusColor;
 
-        // إضافة أو تحديث بيانات المتدرب في الكشف الكلي
         const existingIndex = traineesList.findIndex(st => st.code === codeInput);
         const traineeData = {
             name: nameInput,
             code: codeInput,
+            model: type,
             theory: theoryTotal,
             practical: pr,
             total: total,
@@ -470,7 +543,6 @@
             traineesList.push(traineeData);
         }
 
-        // ترتيب كافة المتدربين تلقائياً من الأعلى درجات للأقل
         traineesList.sort((a, b) => b.total - a.total);
 
         renderTable();
@@ -489,6 +561,7 @@
                     <td>${index + 1}</td>
                     <td>${st.name}</td>
                     <td>${st.code}</td>
+                    <td>نموذج ${st.model}</td>
                     <td>${st.theory}</td>
                     <td>${st.practical}</td>
                     <td><strong>${st.total}</strong></td>
@@ -499,20 +572,11 @@
     }
 
     function resetFormForNewStudent() {
-        // تفريغ بيانات المتدرب
         document.getElementById('studentName').value = "";
         document.getElementById('studentCode').value = "";
-
-        // إلغاء تحديد خيارات صح/خطأ
         document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
-
-        // إعادة الضبط الافتراضي لجميع القوائم المنسدلة للدرجات
         document.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
-
-        // إخفاء صندوق النتيجة الفردية
         document.querySelector('.single-result-box').style.display = 'none';
-
-        // التمرير لأعلى الصفحة لبدء متدرب جديد
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
